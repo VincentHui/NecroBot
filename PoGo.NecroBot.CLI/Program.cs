@@ -35,6 +35,8 @@ namespace PoGo.NecroBot.CLI
             Thread.CurrentThread.CurrentCulture = culture;
 
             AppDomain.CurrentDomain.UnhandledException += UnhandledExceptionEventHandler;
+            var slackListener = new slackLoggerListener();
+
 
             Console.Title = "NecroBot";
             Console.CancelKeyPress += (sender, eArgs) =>
@@ -150,8 +152,9 @@ namespace PoGo.NecroBot.CLI
             var aggregator = new StatisticsAggregator(stats);
             ProgressBar.fill(50);
             var listener = new ConsoleEventListener();
-            ProgressBar.fill(60);
 
+            ProgressBar.fill(60);
+            session.EventDispatcher.EventReceived += evt => slackListener.Listen(evt, session);
             session.EventDispatcher.EventReceived += evt => listener.Listen(evt, session);
             session.EventDispatcher.EventReceived += evt => aggregator.Listen(evt, session);
             if (settings.WebsocketsSettings.UseWebsocket)
