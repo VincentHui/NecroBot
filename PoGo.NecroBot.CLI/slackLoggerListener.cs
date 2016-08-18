@@ -10,8 +10,6 @@ using POGOProtos.Inventory.Item;
 using POGOProtos.Networking.Responses;
 using Slack.Webhooks;
 using System.Collections.Generic;
-using Pook.SlackAPI;
-using Pook.SlackAPI.RTMMessages;
 using System.Threading.Tasks;
 
 namespace PoGo.NecroBot.CLI

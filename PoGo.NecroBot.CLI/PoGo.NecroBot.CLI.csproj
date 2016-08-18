@@ -407,10 +407,6 @@
       <Project>{a03a7bb2-4f0b-467b-84b2-9a76e6aae6fb}</Project>
       <Name>POGOProtos</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Slack\SlackAPI\SlackAPI.csproj">
-      <Project>{D67D593D-29D1-47B8-950C-80BAAC8AF01C}</Project>
-      <Name>SlackAPI</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
