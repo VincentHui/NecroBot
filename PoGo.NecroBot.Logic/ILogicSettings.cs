@@ -74,6 +74,7 @@ namespace PoGo.NecroBot.Logic
 
     public interface ILogicSettings
     {
+        string GoogleAPIKey { get; }
         bool UseWebsocket { get; }
         bool CatchPokemon { get; }
         bool TransferWeakPokemon { get; }
@@ -194,6 +195,8 @@ namespace PoGo.NecroBot.Logic
         int CatchFleePerHours { get; }
         int CatchMissedPerHours { get; }
         int CatchSuccessPerHours { get; }
+        bool UseKillSwitchPokestops { get; }
+        int AmountPokestops { get; }
         ICollection<KeyValuePair<ItemId, int>> ItemRecycleFilter { get; }
 
         ICollection<PokemonId> PokemonsToEvolve { get; }

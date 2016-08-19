@@ -32,6 +32,7 @@ namespace PoGo.NecroBot.Logic
         public string GooglePassword;
         public string PtcUsername;
         public string PtcPassword;
+        public string GoogleAPIKey;
     }
 
     public class ProxyConfig
@@ -295,7 +296,7 @@ namespace PoGo.NecroBot.Logic
         public double WalkingSpeedInKilometerPerHour = 4.16;
         public bool UseWalkingSpeedVariant = true;
         public double WalkingSpeedVariant = 1.2;
-        public bool ShowVariantWalking = true;
+        public bool ShowVariantWalking = false;
         public bool RandomlyPauseAtStops = true;
         public int MaxSpawnLocationOffset = 10;
         public int MaxTravelDistanceInMeters = 1000;
@@ -448,6 +449,8 @@ namespace PoGo.NecroBot.Logic
         public int CatchFleePerHours = 40;
         public int CatchMissedPerHours = 40;
         public int CatchSuccessPerHours = 40;
+        public bool UseKillSwitchPokestops = true;
+        public int AmountPokestops = 80;
     }
 
     public class GlobalSettings
@@ -846,6 +849,19 @@ namespace PoGo.NecroBot.Logic
         public void checkProxy(ITranslation translator)
         {
             Auth.checkProxy(translator);
+        }
+
+        public static void CheckGoogleAPI(ITranslation translator, GlobalSettings settings)
+        {
+            if (settings.Auth.AuthConfig.GoogleAPIKey == null)
+            {
+                Console.BackgroundColor = ConsoleColor.Black;
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.WriteLine(translator.GetTranslation(TranslationString.GoogleAPIFailed), LogLevel.Warning);
+                Console.WriteLine(translator.GetTranslation(TranslationString.RequireInputText), LogLevel.Warning);
+                Console.ReadLine();
+                Environment.Exit(0);
+            }
         }
 
         public static bool PromptForSetup(ITranslation translator)
@@ -1268,6 +1284,7 @@ namespace PoGo.NecroBot.Logic
             _settings = settings;
         }
 
+        public string GoogleAPIKey => _settings.Auth.AuthConfig.GoogleAPIKey;
         public string ProfilePath => _settings.ProfilePath;
         public string ProfileConfigPath => _settings.ProfileConfigPath;
         public string GeneralConfigPath => _settings.GeneralConfigPath;
@@ -1360,6 +1377,8 @@ namespace PoGo.NecroBot.Logic
         public int CatchFleePerHours => _settings.SoftBanSettings.CatchFleePerHours;
         public int CatchMissedPerHours => _settings.SoftBanSettings.CatchMissedPerHours;
         public int CatchSuccessPerHours => _settings.SoftBanSettings.CatchSuccessPerHours;
+        public bool UseKillSwitchPokestops => _settings.SoftBanSettings.UseKillSwitchPokestops;
+        public int AmountPokestops => _settings.SoftBanSettings.AmountPokestops;
         public ICollection<KeyValuePair<ItemId, int>> ItemRecycleFilter => _settings.ItemRecycleFilter;
         public ICollection<PokemonId> PokemonsToEvolve => _settings.PokemonsToEvolve;
         public ICollection<PokemonId> PokemonsToLevelUp => _settings.PokemonsToLevelUp;
